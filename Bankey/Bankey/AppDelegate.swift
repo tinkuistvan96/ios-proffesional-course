@@ -73,7 +73,7 @@ extension AppDelegate: OnboardingContainerViewControllerDelegate {
     }
 }
 
-extension AppDelegate: LogoutDelegate {
+extension AppDelegate {
     @objc func didLogout() {
         displayLogin()
     }
