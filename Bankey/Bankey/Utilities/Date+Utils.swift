@@ -11,7 +11,7 @@ import Foundation
 extension Date {
     var monthDayYearString: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM d, yyyy"
+        dateFormatter.dateFormat = "yyyy.MM.dd"
         return dateFormatter.string(from: self)
     }
 }
