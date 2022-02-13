@@ -19,6 +19,7 @@ class AccountSummaryViewController: UIViewController {
     var tableView = UITableView()
     var headerView = AccountSummaryHeaderView(frame: .zero)
     let barButtonItem = UIBarButtonItem()
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +27,8 @@ class AccountSummaryViewController: UIViewController {
         setupTableView()
         setupTableHeaderView()
         layout()
-        //fetchAccounts()
-        fetchDataAndLoadViews()
+        fetchData()
+        setupRefreshControl()
     }
 }
 
@@ -58,6 +59,12 @@ extension AccountSummaryViewController {
         headerView.frame.size = size
         
         tableView.tableHeaderView = headerView
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl.tintColor = appColor
+        refreshControl.addTarget(self, action: #selector(refreshContent), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     private func layout() {
@@ -98,12 +105,16 @@ extension AccountSummaryViewController {
     @objc func logoutTapped() {
         NotificationCenter.default.post(name: .logout, object: nil)
     }
+    
+    @objc func refreshContent() {
+        fetchData()
+    }
 }
 
 // MARK: - Networking
 
 extension AccountSummaryViewController {
-    private func fetchDataAndLoadViews() {
+    private func fetchData() {
         let group = DispatchGroup()
         
         group.enter()
@@ -132,6 +143,7 @@ extension AccountSummaryViewController {
         
         group.notify(queue: .main) {
             self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
