@@ -36,6 +36,7 @@ struct Account: Codable {
     }
 }
 
+//MARK: - URLSessions
 extension AccountSummaryViewController {
     func fetchProfile(forUserId userId: String, completion: @escaping (Result<Profile, NetworkError>) -> Void) {
         let url = URL(string: "https://fierce-retreat-36855.herokuapp.com/bankey/profile/\(userId)")!
