@@ -16,6 +16,13 @@ class AccountSummaryViewController: UIViewController {
     var headerViewModel = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Welcome", name: "", date: Date())
     var accountCellViewModels: [AccountSummaryCell.ViewModel] = []
     
+    var profileManager: ProfileManageable = ProfileManager()
+    
+    lazy var errorAlert: UIAlertController = {
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        return alert
+    }()
     
     var tableView = UITableView()
     var headerView = AccountSummaryHeaderView(frame: .zero)
@@ -140,8 +147,19 @@ extension AccountSummaryViewController {
     private func fetchData() {
         let group = DispatchGroup()
         
+        let userId = String(Int.random(in: 1..<4))
+        
+        fetchProfile(group: group, userId: userId)
+        fetchAccounts(group: group, userId: userId)
+        
+        group.notify(queue: .main) {
+            self.reloadView()
+        }
+    }
+    
+    private func fetchProfile(group: DispatchGroup, userId: String) {
         group.enter()
-        fetchProfile(forUserId: "1") { result in
+        profileManager.fetchProfile(forUserId: userId) { result in
             switch result {
             case .success(let profile):
                 self.profile = profile
@@ -150,9 +168,11 @@ extension AccountSummaryViewController {
             }
             group.leave()
         }
-        
+    }
+    
+    private func fetchAccounts(group: DispatchGroup, userId: String) {
         group.enter()
-        fetchAccounts(forUserId: "1") { result in
+        fetchAccounts(forUserId: userId) { result in
             switch result {
             case .success(let accounts):
                 self.accounts = accounts
@@ -161,16 +181,16 @@ extension AccountSummaryViewController {
             }
             group.leave()
         }
+    }
+    
+    private func reloadView() {
+        self.tableView.refreshControl?.endRefreshing()
         
-        group.notify(queue: .main) {
-            self.tableView.refreshControl?.endRefreshing()
-            
-            guard let profile = self.profile else { return }
-            self.isLoaded = true
-            self.configureTableCells(with: self.accounts)
-            self.configureTableHeaderView(with: profile)
-            self.tableView.reloadData()
-        }
+        guard let profile = self.profile else { return }
+        self.isLoaded = true
+        self.configureTableCells(with: self.accounts)
+        self.configureTableHeaderView(with: profile)
+        self.tableView.reloadData()
     }
     
     private func configureTableCells(with accounts: [Account]) {
@@ -185,12 +205,21 @@ extension AccountSummaryViewController {
     }
     
     private func showErrorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        //let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        //alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        errorAlert.title = title
+        errorAlert.message = message
+        present(errorAlert, animated: true, completion: nil)
     }
     
     private func displayError(_ error: NetworkError) {
+        let titleAndMessage = titleAndMessage(for: error)
+        self.showErrorAlert(title: titleAndMessage.0, message: titleAndMessage.1)
+    }
+    
+    //Extracting the functionality to make more testable
+    private func titleAndMessage(for error: NetworkError) -> (String, String) {
         let title: String
         let message: String
         
@@ -202,6 +231,19 @@ extension AccountSummaryViewController {
             title = "Decoding Error"
             message = "We could not process your request. Please try again."
         }
-        self.showErrorAlert(title: title, message: message)
+        
+        return (title, message)
+    }
+}
+
+//MARK: - Unit testing
+//I made this func to keep the other func private
+extension AccountSummaryViewController {
+    func titleAndMessageForTesting(_ error: NetworkError) -> (String, String) {
+        return titleAndMessage(for: error)
+    }
+    
+    func fetchProfileForTesting() {
+        fetchProfile(group: DispatchGroup(), userId: "1")
     }
 }

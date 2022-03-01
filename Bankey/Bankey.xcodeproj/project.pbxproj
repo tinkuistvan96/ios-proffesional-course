@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F07145627CCCCC500FC37E3 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F07145527CCCCC500FC37E3 /* ProfileManager.swift */; };
+		4F07146F27CEC00600FC37E3 /* AccountSummaryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F07146E27CEC00600FC37E3 /* AccountSummaryViewControllerTests.swift */; };
 		4F36A00627B3D89100BC5781 /* ShakeyBellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F36A00527B3D89100BC5781 /* ShakeyBellView.swift */; };
 		4F450A2527AC8C0800B88E2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F450A2427AC8C0800B88E2C /* AppDelegate.swift */; };
 		4F450A2927AC8C0800B88E2C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F450A2827AC8C0800B88E2C /* LoginViewController.swift */; };
@@ -47,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F07145527CCCCC500FC37E3 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
+		4F07146E27CEC00600FC37E3 /* AccountSummaryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryViewControllerTests.swift; sourceTree = "<group>"; };
 		4F36A00527B3D89100BC5781 /* ShakeyBellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeyBellView.swift; sourceTree = "<group>"; };
 		4F450A2127AC8C0800B88E2C /* Bankey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bankey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F450A2427AC8C0800B88E2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F07145427CCCC9400FC37E3 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4F07145527CCCCC500FC37E3 /* ProfileManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		4F36A00727B3D89600BC5781 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +196,7 @@
 		4F450A4A27B1035F00B88E2C /* AccountSummary */ = {
 			isa = PBXGroup;
 			children = (
+				4F07145427CCCC9400FC37E3 /* Networking */,
 				4F450A4B27B1038F00B88E2C /* AccountSummaryViewController.swift */,
 				4F56B64927B82D8200E3C697 /* AccountSummaryViewController+Networking.swift */,
 				4F450A5127B12BDA00B88E2C /* Header */,
@@ -224,6 +237,7 @@
 			children = (
 				4F56B64D27B8767F00E3C697 /* ProfileTests.swift */,
 				4F56B64F27B8782D00E3C697 /* AccountTests.swift */,
+				4F07146E27CEC00600FC37E3 /* AccountSummaryViewControllerTests.swift */,
 			);
 			path = AccountSummary;
 			sourceTree = "<group>";
@@ -342,6 +356,7 @@
 				4F450A4727AFDBCF00B88E2C /* UIViewController+Utils.swift in Sources */,
 				4F56B65427BA656100E3C697 /* SkeletonCell.swift in Sources */,
 				4F56B64827B821CB00E3C697 /* Date+Utils.swift in Sources */,
+				4F07145627CCCCC500FC37E3 /* ProfileManager.swift in Sources */,
 				4F450A3B27AC928F00B88E2C /* LoginView.swift in Sources */,
 				4F450A4527AFCD9A00B88E2C /* LocalState.swift in Sources */,
 				4F450A4E27B119FB00B88E2C /* AccountSummaryHeaderView.swift in Sources */,
@@ -370,6 +385,7 @@
 				4F5B354F27B2B09200D758FF /* CurrencyFormatterTests.swift in Sources */,
 				4F56B65027B8782D00E3C697 /* AccountTests.swift in Sources */,
 				4F56B64E27B8767F00E3C697 /* ProfileTests.swift in Sources */,
+				4F07146F27CEC00600FC37E3 /* AccountSummaryViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
