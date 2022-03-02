@@ -9,11 +9,35 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let newTextField = PasswordTextField(placeholderText: "New password")
+    let stackView = UIStackView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemMint
+        style()
+        layout()
+        
     }
 
-
+    private func style() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        
+    }
+    
+    private func layout() {
+        view.addSubview(stackView)
+        
+        stackView.addSubview(newTextField)
+        
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 }
 
